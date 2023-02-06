@@ -1,0 +1,330 @@
+
+#+Author:
+#+DATE:
+#+PROPERTY: header-args:python :eval never-export :session
+#+LATEX_CLASS: vmemoir
+#+LATEX_CLASS_OPTIONS: [12pt,a4paper,twoside,openany,strict,extrafontsizes]
+#+LATEX_HEADER: \usepackage[section]{placeins}
+#+LATEX_HEADER: \hypersetup{hidelinks}
+#+LATEX_HEADER: \PassOptionsToPackage{hyphens}{url}
+#+LATEX_HEADER: \renewcommand*{\chapnumfont}{\antonioregular\HUGE}
+#+LATEX_HEADER: \setsecheadstyle{\raggedright\large\bfseries}
+#+LATEX_HEADER: \setsubsecheadstyle{\raggedright\bfseries\itshape}
+#+LATEX_HEADER: \setcounter\secnumdepth{4}
+#+LATEX_HEADER: \copypagestyle{mainmatterpage}{Ruled}
+#+LATEX_HEADER: \makeevenhead{mainmatterpage}{\thepage}{}{Labour Absorption}
+#+LATEX_HEADER: \makeoddhead{mainmatterpage}{\leftmark}{}{\thepage}
+#+LATEX_HEADER: \makeevenfoot{mainmatterpage}{}{}{}
+#+LATEX_HEADER: \makeoddfoot{mainmatterpage}{}{}{}
+#+LATEX_HEADER: \copypagestyle{othermatterpage}{ruled}
+#+LATEX_HEADER: \makeevenhead{othermatterpage}{\thepage}{}{\leftmark}
+#+LATEX_HEADER: \makeoddhead{othermatterpage}{\leftmark}{}{\thepage}
+#+LATEX_HEADER: \makeevenfoot{othermatterpage}{}{}{}
+#+LATEX_HEADER: \makeoddfoot{othermatterpage}{}{}{}
+#+LATEX_HEADER: \makeevenhead{headings}{\thepage}{}{\leftmark}
+#+LATEX_HEADER: \makeoddhead{headings}{\rightmark}{}{\thepage}
+#+LATEX_HEADER: \nouppercaseheads
+#+LATEX_HEADER: \pagestyle{headings}
+#+LATEX_HEADER: \emergencystretch=\maxdimen
+#+LATEX_HEADER: \OnehalfSpacing
+#+LATEX_HEADER: \setPagenoteSpacing{1.11}
+#+LaTeX_HEADER: \setFloatSpacing{1.15}
+#+LATEX_HEADER: \addtolength{\skip\footins}{10pt}
+#+LATEX_HEADER: \setsecheadstyle{\raggedright\large\bfseries}
+#+LATEX_HEADER: \setsubsecheadstyle{\raggedright\bfseries}
+#+LaTeX_HEADER: \makechapterstyle{VZ23}{
+#+LaTeX_HEADER: \renewcommand\chapternamenum{\ifanappendix {\huge\raggedright Appendix } \else \fi}
+#+LaTeX_HEADER: \renewcommand\printchaptername{}
+#+LaTeX_HEADER: \renewcommand\chapnamefont{\antonioregular\LARGE\raggedright}
+#+LaTeX_HEADER: \renewcommand\chapnumfont{\ifanappendix \huge\raggedright \else \HUGE\raggedright \fi}
+#+LaTeX_HEADER: \renewcommand\chaptitlefont{\antonioregular\LARGE\raggedright}
+#+LATEX_HEADER: \usepackage{caption}
+#+LATEX_HEADER: \captionsetup{justification=raggedright,singlelinecheck=false}
+#+LaTeX_HEADER: \renewcommand\afterchapternum{%
+#+LaTeX_HEADER: \par\nobreak\vskip\midchapskip\hrule\vskip\midchapskip}
+#+LaTeX_HEADER: \renewcommand\printchapternonum{%
+#+LaTeX_HEADER: \vphantom{\chapnumfont \thechapter}
+#+LaTeX_HEADER: \par\nobreak\vskip\midchapskip\hrule\vskip\midchapskip}
+#+LaTeX_HEADER: }
+#+LATEX_HEADER: \renewcommand\cftappendixname{\appendixname~}
+#+LaTeX_HEADER: \chapterstyle{VZ23}
+#+LaTeX_HEADER: \addtopsmarks{ruled}{}{
+#+LaTeX_HEADER:   \createmark{chapter}{left}{nonumber}{}{}
+#+LaTeX_HEADER: }
+#+LATEX_HEADER: \setlength\cftpartnumwidth{3em}
+#+LATEX_HEADER: \captiondelim{. }
+#+LATEX_HEADER: \clubpenalty=10000
+#+LATEX_HEADER: \widowpenalty=10000
+#+LATEX_HEADER: \hbadness=10000
+#+LATEX_HEADER: \pretolerance=2000
+#+LATEX_HEADER: \tolerance=2000
+#+LATEX_HEADER: \emergencystretch=10pt
+#+LATEX_HEADER: \hyphenpenalty=8000
+#+LATEX_HEADER: \raggedbottom
+#+LATEX_HEADER: \newlength{\drop}
+#+LATEX_HEADER: \drop = 0.1\textheight
+#+LATEX_HEADER: \usepackage{tabulary,threeparttable,longtable,float,tabularx,bookmark}
+#+LATEX_HEADER: \setlength{\abovecaptionskip}{3pt}
+#+LATEX_HEADER: \renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textit{#1}}
+#+LATEX_HEADER: \tracingtabularx
+#+LATEX_HEADER: \renewcommand{\tabcolsep}{5pt}
+#+LATEX_HEADER: \usepackage{adjustbox,xltabular}
+#+LaTeX_HEADER: \setlength\midchapskip{10pt}
+#+LATEX_HEADER: \usepackage[tight-spacing=true]{siunitx}
+#+LATEX_HEADER: \usepackage[round-mode = places,round-precision=1]{siunitx}
+#+LATEX_HEADER: \newcolumntype{C}{>{\centering\arraybackslash}X}
+#+MACRO: M @@latex:\multicolumn{1}{C}{$1}@@
+#+LATEX_HEADER: \renewcommand{\TPTminimum}{\linewidth}
+#+LATEX_HEADER: \usepackage{comment,multirow,booktabs,lmodern,graphicx,float,wrapfig,underscore,array,url}
+#+LATEX_HEADER: \newcolumntype{C}{>{\centering\arraybackslash}X}
+#+LATEX_HEADER: \newcommand{\mcone}[1]{\multicolumn{1}{C}{#1}}
+#+MACRO: MCONE @@latex:\mcone{$1}@@
+#+LATEX_HEADER: \usepackage{etoolbox}
+#+LATEX_HEADER: \appto\TPTnoteSettings{\scriptsize}
+#+OPTIONS: toc:nil num:3 H:4 ^:{} broken-links:mark
+#+LATEX_HEADER: \newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
+#+LATEX_HEADER: \usepackage{pdflscape}
+#+LATEX_HEADER: \usepackage{xcolor}
+#+LATEX_HEADER: \usepackage[many]{tcolorbox}
+#+LATEX_HEADER: \tcbuselibrary{breakable}
+#+LATEX_HEADER: \NewTColorBox[auto counter,number within=chapter,list inside=box]{NewBox}{v}{%
+#+LATEX_HEADER:  float*=htb,width=\textwidth,enhanced,center title,parbox=false,
+#+LATEX_HEADER:  title=Box~\thetcbcounter\quad#1, % any tcolorbox options here
+#+LATEX_HEADER:  }
+
+\frontmatter
+\thispagestyle{empty}
+
+
+#+begin_small
+\begin{titlepage}
+   \begin{center}
+       \vspace*{1cm}
+
+       \textbf{Python Guide}
+
+       \vspace{0.5cm}
+
+        \vspace{0.8cm}
+
+       \textbf{Prachi Bansal}
+
+
+       \vfill
+
+       \vspace{1cm}
+
+       Data, Democracy, and Development\\
+       Azim Premji University\\
+       Bengaluru\\
+       2023\\
+
+   \end{center}
+\end{titlepage}
+#+end_small
+
+\pagenumbering{gobble}
+
+\newpage
+\thispagestyle{empty}
+\newpage
+\thispagestyle{empty}
+\cleartorecto
+
+#+TOC: headlines 1
+#+TOC: listings
+#+TOC: tables
+#+TOC: boxes
+
+
+* What is Pandas and why use them?
+
+Pandas is a popular library of python which makes working on rectangular/tabular data easy. To install pandas, use the following command:
+
+- pip install pandas
+
+To be sure you are not having multiple Python versions that are confusing, you should run following commands:
+
+- python3 -m pip install pandas
+
+* Reading data using pandas
+
+you can use the following command:
+
+-  a=pd.read_csv("worker.csv")//
+
+  Note that indentation matters a lot in python. You should not writr
+
+- pd.read_csv("worker.csv")=a or ->a//
+
+* Investigating data using pandas
+
+To investigate any data set, use the following commands:
+
++ a.head(): gives you the top 5 rows of the data (see program [[investigate]])
++ a.tail(): gives you last 5 rows
++ a.count(): gives count of non-missing observations
++ a.describe(): gives basic summary statistic for all columns
++ a.shape: tells you how many rows and columns. Please note this does not require any parenthesis because it is an argument not a method. (More about this later)
+
+
+
+#+NAME: test
+#+BEGIN_SRC python :
+  def foo(x):
+    if x>0:
+      return x+1
+
+    else:
+      return x-1
+
+  return foo(5)
+
+
+#+end_src
+
+#+RESULTS: test
+
+#+NAME: test
+#+begin_src python :session :results value
+  import numpy as np
+  a=np.array([1,2,3])
+  print(type(a))
+
+  import pandas as pd
+
+    df = pd.DataFrame({
+        "a": [1,2,3],
+        "b": [4,5,6]
+    })
+    <<pd2org("df")>>
+
+#+end_src
+
+
+
+
+#+NAME: investigate
+#+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
+  import pandas as pd
+  a=pd.read_csv("~/acj2022/worker.csv")
+  a.head()
+  a.tail()
+  a.describe()
+  a.shape
+  a.index
+  a.columns
+  a.dtypes
+  a.info(verbose=True)
+  a.size #number of elements in the file
+  a.empty
+  a.iat #call out for index
+  a.iat[1,1]
+  a.iloc[::20, :]
+
+#+end_src
+
+#+RESULTS: investigate
+#+begin_example
+     serial.no    wage  sex  edu  contract  age
+0            1  120.00    1    1         2   57
+20          21   18.00    1    2         2   19
+40          41  300.00    1    3         1   35
+60          61   30.00    2    1         1   38
+80          81   94.25    2    4         1   22
+100        101  150.00    2    1         1   24
+120        121  243.00    1    2         1   35
+140        141   78.00    1    1         2   38
+160        161   16.00    2    1         2   50
+180        181  200.00    1    3         1   35
+200        201   72.00    1    1         2   32
+220        221  151.50    1    4         1   30
+240        241  145.00    1    1         1   20
+260        261  320.00    1    1         1   37
+#+end_example
+
+
+
+#+NAME: sort
+#+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
+  import pandas as pd
+  a=pd.read_csv("~/acj2022/worker.csv",index_col=None)
+  #a.sort_values("wage") #sort rows accordinf to a particular attribute/column
+  #a.sort_values("wage",ascending=False)
+  a.sort_values(["wage","sex"])#note the list
+  #a.sort_values(["wage","sex"],ascending=[True,False]) #each column can be sorted in a different order
+
+#+end_src
+
+#+RESULTS: sort
+
+
+#+NAME: subsetting_columns
+#+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
+  import pandas as pd
+  a=pd.read_csv("~/acj2022/worker.csv",index_col=None)
+  a["wage"]
+  a[["wage","sex"]] #inner square bracket makes the list of columns to be subsetted
+  #alternatively
+  columns=["wage","sex"]
+  a[columns]
+#+end_src
+
+#+RESULTS: subsetting_columns
+#+begin_example
+      wage  sex
+0    120.0    1
+1    224.0    1
+2    132.0    1
+3     75.0    1
+4    111.0    2
+..     ...  ...
+256  120.0    1
+257  437.0    1
+258  417.0    1
+259  120.0    1
+260  320.0    1
+
+[261 rows x 2 columns]
+#+end_example
+
+
+#+NAME: subsetting_rows
+#+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
+  import pandas as pd
+  a=pd.read_csv("~/acj2022/worker.csv",index_col=None)
+  a["wage"]>400
+  a[a["wage"]>400]
+  a[a["wage"]==950]
+  #subset on multiple conditions??
+  a[(a["wage"]==950)&(a["sex"]==1)]
+#+end_src
+
+#+RESULTS: subsetting_rows
+:     serial.no   wage  sex  edu  contract  age
+: 49         50  950.0    1    4         2   47
+
+#+NAME: is_in_method
+#+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
+  import pandas as pd
+  a=pd.read_csv("~/acj2022/worker.csv",index_col=None)
+  is_male=a["sex"].isin(["1"])
+  a[is_male]
+#+end_src
+
+#+RESULTS: is_in_method
+: Empty DataFrame
+: Columns: [serial.no, wage, sex, edu, contract, age]
+: Index: []
+
+* New columns
+
++ Mutating or transforming a data frame
+
+#+NAME: new_cols
+#+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
+ a["wage_new"]=a["wage"]*100
+ print(a.head())
+#+end_src
+
+#+RESULTS: new_cols
