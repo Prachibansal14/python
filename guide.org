@@ -220,7 +220,7 @@ To investigate any data set, use the following commands:
   a.empty
   a.iat #call out for index
   a.iat[1,1]
-  a.iloc[::20, :]
+  a.iloc[::5, :]
 
 #+end_src
 
@@ -228,18 +228,57 @@ To investigate any data set, use the following commands:
 #+begin_example
      serial.no    wage  sex  edu  contract  age
 0            1  120.00    1    1         2   57
+5            6  127.00    1    3         2   22
+10          11  324.00    1    3         2   26
+15          16   50.00    2    2         2   16
 20          21   18.00    1    2         2   19
+25          26   91.80    1    4         1   35
+30          31   81.00    1    1         2   20
+35          36   47.00    2    1         2   41
 40          41  300.00    1    3         1   35
+45          46   50.00    1    2         2   25
+50          51  100.00    1    1         2   30
+55          56   15.00    2    1         2   13
 60          61   30.00    2    1         1   38
+65          66   79.00    1    1         2   60
+70          71  342.00    1    1         1   56
+75          76   54.00    1    3         2   16
 80          81   94.25    2    4         1   22
+85          86  427.00    1    1         1   55
+90          91  120.00    1    1         2   34
+95          96   40.00    1    1         1   15
 100        101  150.00    2    1         1   24
+105        106  175.00    2    1         1   40
+110        111  120.50    1    3         2   27
+115        116  100.00    1    1         2   23
 120        121  243.00    1    2         1   35
+125        126   55.00    1    1         2   13
+130        131   39.50    1    2         2   19
+135        136  419.00    1    1         1   42
 140        141   78.00    1    1         2   38
+145        146   90.00    1    1         2   55
+150        151   67.50    1    3         2   21
+155        156  248.00    1    4         1   37
 160        161   16.00    2    1         2   50
+165        166  241.25    1    1         1   51
+170        171  174.50    1    1         2   28
+175        176  120.00    1    1         1   40
 180        181  200.00    1    3         1   35
+185        186  378.00    1    4         1   36
+190        191  275.00    1    3         1   32
+195        196  392.50    1    1         1   58
 200        201   72.00    1    1         2   32
+205        206   36.00    1    3         2   33
+210        211  375.00    1    1         1   45
+215        216  390.00    1    1         1   50
 220        221  151.50    1    4         1   30
+225        226  179.00    1    4         1   23
+230        231  282.75    1    3         2   33
+235        236  400.00    1    4         1   36
 240        241  145.00    1    1         1   20
+245        246  175.00    1    3         1   39
+250        251  360.00    1    2         1   40
+255        256  112.50    1    2         2   23
 260        261  320.00    1    1         1   37
 #+end_example
 
@@ -249,7 +288,9 @@ To investigate any data set, use the following commands:
 #+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
   import pandas as pd
   a=pd.read_csv("~/acj2022/worker.csv",index_col=None)
-  #a.sort_values("wage") #sort rows accordinf to a particular attribute/column
+  a.sort_values("wage")
+
+  #sort rows accordinf to a particular attribute/column
   #a.sort_values("wage",ascending=False)
   a.sort_values(["wage","sex"])#note the list
   #a.sort_values(["wage","sex"],ascending=[True,False]) #each column can be sorted in a different order
@@ -297,6 +338,14 @@ To investigate any data set, use the following commands:
   a[a["wage"]>400]
   a[a["wage"]==950]
   #subset on multiple conditions??
+
+
+
+
+
+
+
+
   a[(a["wage"]==950)&(a["sex"]==1)]
 #+end_src
 
@@ -323,8 +372,88 @@ To investigate any data set, use the following commands:
 
 #+NAME: new_cols
 #+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
- a["wage_new"]=a["wage"]*100
- print(a.head())
+  a["wage_new"]=a["wage"]*100
+  print(a.head())
+#+end_src
+
+#+RESULTS: new_cols
+
+* Aggregating data
+
+Mean: centre of data
+
+
+#+NAME: summary_statistics
+#+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
+  a["wage"].mean()
+  a["wage"].mode()
+  a["wage"].median()
+  a["wage"].min()
+  a["wage"].max()
+  a["wage"].var()
+  a["wage"].std()
+  a["wage"].sum()
+  a["wage"].quantile()
+
+  #can you compute the mean wage for each sex?
+
+  a["new_wage"]=a["wage"]**2
+  # .agg() method
+
+  def pert75(column):
+      return column.quantile(0.75)
+
+  a["wage"].agg(pert75)
+  a[["wage","new_wage"]].agg(pert75)
+
+  #cumulative sum
+  a["wage"].cumsum()
+
+  #IQR function
+  import numpy as np
+  def iqr(column):
+      return column.quantile(0.75)-column.quantile(0.25)
+
+  #print IQR of the wage column
+  #print IQR of multiple columns
+  #print iqr and np.median by passing both in .agg function
+
+
+  ##how to work with categorical data
+
+  .drop_duplicates method
+  drop_duplicates(subset="name")
+  subset=["name","breed"]
+
+  value_counts() #gives counts
+
+  value_counts(normalize=True) #gives proportion of the total
+
+  # drop duplicate store and type and save as store_types
+  # drop duplicate store and department and save as store_depts
+  #subset the rows that are holiday weeks using is_holiday column ad drop the duplicate dates,
+  #save this as holiday_dates
+
+
+
+
+  a[a["sex"]==1]["wage"].mean()
+  a[a["sex"]==2]["wage"].mean()
+
+  a.groupby("sex")["wage"].mean()
+  a.groupby("sex")["wage"].agg(["min", "max", "sum", "mean"])
+  a.groupby(["sex","contract"])["wage"].agg(["min", "max", "sum", "mean"])
+  #values: column you want to summarise, and index is the column you want to group by
+
+  a.pivot_table(values="wage",index="sex")
+  a.pivot_table(values="wage",index=["sex"],columns="contract",aggfunc=np.mean)
+  a.pivot_table(values="wage",index=["sex"],columns="contract",aggfunc=np.mean,margins=True)
+
+  #dealing with indexes
+  a[a["sex"].is.in([1])]
+
+
+
 #+end_src
 
 #+RESULTS: new_cols
