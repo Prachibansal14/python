@@ -377,11 +377,64 @@ To investigate any data set, use the following commands:
   a.pivot_table(values="wage",index=["sex"],columns="contract",aggfunc=np.mean)
   a.pivot_table(values="wage",index=["sex"],columns="contract",aggfunc=np.mean,margins=True)
 
-  #dealing with indexes
-  a[a["sex"].isin([1])]
-  a_ind.loc[[1]]
-
 
 #+end_src
 
 #+RESULTS: new_cols
+
+
+* Dealing with Indexes
+
++ Note that each pandas dataframe has three components
+   - A numpy array
+   - A column index
+   - A row index
+
+#+NAME: indexes
+#+BEGIN_SRC python :results value
+  data=pd.read_csv("~/teaching2023/data/placement.csv")
+  print(data)
+  data.columns
+  data.index
+
+  # setting a column as index
+
+  data_ind=data.set_index("hsc_s")
+  print(data_ind)
+  #index values are left aligned
+
+  #undo what you just did
+  data_ind.reset_index()
+
+  #why index?
+
+  # answer: makes subsetting easier
+  # without indexing the code is like this
+  data[data["hsc_s"].isin(["Commerce","Arts"])]
+
+  #after setting the index you can use .loc
+  data_ind=data.set_index("hsc_s")
+  data_ind.loc[["Commerce","Arts"]]
+
+  # note that values in index is not unique. Selecting arts or commerce returns multiple
+  #observations for each
+
+  # you can set multiple indexes and then subset on different levels
+  #example
+
+  data_ind1=data.set_index(["hsc_s","gender"])
+  data_ind1.loc[[("Arts","M"),("Arts","F")]]
+  #note the order and tuples
+
+  data_ind1.sort_index()  #you can sort by index. By default this would sort all indexes into ascending order
+
+  ##problems: index values are data
+  ## we are moving away from tidy data because you are moving away from column formats
+  ## so this is an optional way of coding
+
+  data.loc[:,"sl_no":"degree_p"]
+  # : keep everything
+  data.iloc[2:5,1:4]  #final values are not included (just like lists)
+#+end_src
+
+#+RESULTS: indexes
