@@ -202,10 +202,10 @@ To investigate any data set, use the following commands:
 #+end_src
 
 
-
+* Investigating data
 
 #+NAME: investigate
-#+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
+#+BEGIN_SRC python :results value
   import pandas as pd
   a=pd.read_csv("~/acj2022/worker.csv")
   a.head()
@@ -225,67 +225,11 @@ To investigate any data set, use the following commands:
 #+end_src
 
 #+RESULTS: investigate
-#+begin_example
-     serial.no    wage  sex  edu  contract  age
-0            1  120.00    1    1         2   57
-5            6  127.00    1    3         2   22
-10          11  324.00    1    3         2   26
-15          16   50.00    2    2         2   16
-20          21   18.00    1    2         2   19
-25          26   91.80    1    4         1   35
-30          31   81.00    1    1         2   20
-35          36   47.00    2    1         2   41
-40          41  300.00    1    3         1   35
-45          46   50.00    1    2         2   25
-50          51  100.00    1    1         2   30
-55          56   15.00    2    1         2   13
-60          61   30.00    2    1         1   38
-65          66   79.00    1    1         2   60
-70          71  342.00    1    1         1   56
-75          76   54.00    1    3         2   16
-80          81   94.25    2    4         1   22
-85          86  427.00    1    1         1   55
-90          91  120.00    1    1         2   34
-95          96   40.00    1    1         1   15
-100        101  150.00    2    1         1   24
-105        106  175.00    2    1         1   40
-110        111  120.50    1    3         2   27
-115        116  100.00    1    1         2   23
-120        121  243.00    1    2         1   35
-125        126   55.00    1    1         2   13
-130        131   39.50    1    2         2   19
-135        136  419.00    1    1         1   42
-140        141   78.00    1    1         2   38
-145        146   90.00    1    1         2   55
-150        151   67.50    1    3         2   21
-155        156  248.00    1    4         1   37
-160        161   16.00    2    1         2   50
-165        166  241.25    1    1         1   51
-170        171  174.50    1    1         2   28
-175        176  120.00    1    1         1   40
-180        181  200.00    1    3         1   35
-185        186  378.00    1    4         1   36
-190        191  275.00    1    3         1   32
-195        196  392.50    1    1         1   58
-200        201   72.00    1    1         2   32
-205        206   36.00    1    3         2   33
-210        211  375.00    1    1         1   45
-215        216  390.00    1    1         1   50
-220        221  151.50    1    4         1   30
-225        226  179.00    1    4         1   23
-230        231  282.75    1    3         2   33
-235        236  400.00    1    4         1   36
-240        241  145.00    1    1         1   20
-245        246  175.00    1    3         1   39
-250        251  360.00    1    2         1   40
-255        256  112.50    1    2         2   23
-260        261  320.00    1    1         1   37
-#+end_example
 
 
-
+* Sorting
 #+NAME: sort
-#+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
+#+BEGIN_SRC python :results value
   import pandas as pd
   a=pd.read_csv("~/acj2022/worker.csv",index_col=None)
   a.sort_values("wage")
@@ -299,9 +243,9 @@ To investigate any data set, use the following commands:
 
 #+RESULTS: sort
 
-
+* Subset columns
 #+NAME: subsetting_columns
-#+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
+#+BEGIN_SRC python :results value
   import pandas as pd
   a=pd.read_csv("~/acj2022/worker.csv",index_col=None)
   a["wage"]
@@ -311,27 +255,10 @@ To investigate any data set, use the following commands:
   a[columns]
 #+end_src
 
-#+RESULTS: subsetting_columns
-#+begin_example
-      wage  sex
-0    120.0    1
-1    224.0    1
-2    132.0    1
-3     75.0    1
-4    111.0    2
-..     ...  ...
-256  120.0    1
-257  437.0    1
-258  417.0    1
-259  120.0    1
-260  320.0    1
-
-[261 rows x 2 columns]
-#+end_example
-
+* Subset rows
 
 #+NAME: subsetting_rows
-#+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
+#+BEGIN_SRC python :results value
   import pandas as pd
   a=pd.read_csv("~/acj2022/worker.csv",index_col=None)
   a["wage"]>400
@@ -371,7 +298,7 @@ To investigate any data set, use the following commands:
 + Mutating or transforming a data frame
 
 #+NAME: new_cols
-#+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
+#+BEGIN_SRC python :results value
   a["wage_new"]=a["wage"]*100
   print(a.head())
 #+end_src
@@ -379,12 +306,13 @@ To investigate any data set, use the following commands:
 #+RESULTS: new_cols
 
 * Aggregating data
-
-Mean: centre of data
-
++ Some summary statistics
++ Dealing with duplicates
++ Pivot tables
++ Indexing
 
 #+NAME: summary_statistics
-#+BEGIN_SRC python :results value :exports results :session :hlines :colnames yes
+#+BEGIN_SRC python :results value
   a["wage"].mean()
   a["wage"].mode()
   a["wage"].median()
@@ -450,8 +378,8 @@ Mean: centre of data
   a.pivot_table(values="wage",index=["sex"],columns="contract",aggfunc=np.mean,margins=True)
 
   #dealing with indexes
-  a[a["sex"].is.in([1])]
-
+  a[a["sex"].isin([1])]
+  a_ind.loc[[1]]
 
 
 #+end_src
