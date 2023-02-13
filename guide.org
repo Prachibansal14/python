@@ -255,6 +255,24 @@ To investigate any data set, use the following commands:
   a[columns]
 #+end_src
 
+#+RESULTS: subsetting_columns
+#+begin_example
+      wage  sex
+0    120.0    1
+1    224.0    1
+2    132.0    1
+3     75.0    1
+4    111.0    2
+..     ...  ...
+256  120.0    1
+257  437.0    1
+258  417.0    1
+259  120.0    1
+260  320.0    1
+
+[261 rows x 2 columns]
+#+end_example
+
 * Subset rows
 
 #+NAME: subsetting_rows
@@ -331,7 +349,7 @@ To investigate any data set, use the following commands:
   def pert75(column):
       return column.quantile(0.75)
 
-  a["wage"].agg(pert75)
+  a["wage"].agg("mean")
   a[["wage","new_wage"]].agg(pert75)
 
   #cumulative sum
@@ -369,11 +387,14 @@ To investigate any data set, use the following commands:
   a[a["sex"]==2]["wage"].mean()
 
   a.groupby("sex")["wage"].mean()
+  a.groupby(["sex","contract"])["wage"].mean()
+
   a.groupby("sex")["wage"].agg(["min", "max", "sum", "mean"])
   a.groupby(["sex","contract"])["wage"].agg(["min", "max", "sum", "mean"])
   #values: column you want to summarise, and index is the column you want to group by
 
   a.pivot_table(values="wage",index="sex")
+  import numpy as np
   a.pivot_table(values="wage",index=["sex"],columns="contract",aggfunc=np.mean)
   a.pivot_table(values="wage",index=["sex"],columns="contract",aggfunc=np.mean,margins=True)
 
@@ -438,3 +459,34 @@ To investigate any data set, use the following commands:
 #+end_src
 
 #+RESULTS: indexes
+
+
+* Visualisation
+
+https://github.com/vikasrawal/quantitative-methods/blob/master/descriptive-statistics.org#graphical-displays-of-quantitative-information-common-pitfalls
+
++ Show the distribution of a numeric variable?
++ Relationship between a categorical and numeric variable
++ Changes in numeric variables over time?
++ Relationship between two numeric variables
+
+http://localhost:8888/notebooks/matplot.ipynb
+
+
+#+NAME: histogram
+#+BEGIN_SRC python :results value
+  import pandas as pd
+  a=pd.read_csv("~/acj2022/worker.csv")
+  #making a histogram
+  import matplotlib.pyplot as plt
+  a["wage"].hist()
+  plt.show()
+
+  #making a scatter plot
+  x=a["age"]
+  y=a["wage"]
+  plt.scatter(x,y)
+  plt.show()
+#+end_src
+
+#+Author:
