@@ -490,3 +490,136 @@ http://localhost:8888/notebooks/matplot.ipynb
 #+end_src
 
 #+Author:
+
++ Matplotlib gives you full control of your visualisation
++ Different ways to use matplotlib
++ We use pyplot interface
+
+   https://www.gapminder.org/tools/#$chart-type=bubbles&url=v1
+
+
+#+NAME: graph1
+#+BEGIN_SRC python :results value
+  import matplotlib.pyplot as plt
+  fig=plt.subplots()
+  plt.show()
+
+
+#+end_src
+
+Note that the plt.subplots() command created two objects: a figure and an axes.
+The figure object is like a container. No data has been added yet
+
+#+NAME: graph2
+#+BEGIN_SRC python :results value
+  import matplotlib.pyplot as plt
+  year=[1960,1980,1990,2010]
+  pop=[2.5,3.4,5.6,7.1]
+  plt.plot(year,pop) #line chart
+  plt.show()
+
+  ##scatter plot
+  plt.scatter(year,pop)
+  plt.show()
+
+  import pandas as pd
+  b=pd.read_csv("~/teaching2023/data/gapminder.csv")
+  plt.plot(b["gdp_cap"],b["life_exp"]) #line chart
+  plt.show()
+
+  ##?? does this make sense
+  plt.scatter(b["gdp_cap"],b["life_exp"])
+  plt.show()
+
+
+
+#+end_src
+
+ The two lists work as arguments. The plot function tells python what to plot and how to plot it. The show function is displaying the chart.
+
+
+ histogram: to get an idea about the distribution
+  How many data points in each bin?
+
+#+NAME: graph3
+#+BEGIN_SRC python :results value
+   import matplotlib.pyplot as plt
+   help(plt.hist)
+   list1=[0,1,0.5,2,4,9,10,2,3.5,6,8,9,10,11,1.5]
+   plt.hist(list1,bins=3)
+   plt.show()
+
+   #create a histogram of life expectancy data for the latest year?
+   #create a histogram of life expectancy data for the first year?
+
+ #+end_src
+
+
+ 10 bins default
+
+* Customisation in Matplotlib
+
+#+NAME: graph2
+#+BEGIN_SRC python :results value
+  import matplotlib.pyplot as plt
+  import pandas as pd
+  c=pd.read_csv("~/teaching2023/data/crimedata_suicides.csv")
+  d=c[c["STATE.UT"]=="PUNJAB"]
+  d=d[["Year","CAUSE","Total.Female"]]
+  d=d[d["CAUSE"]=="Housewife"]
+  plt.plot(d["Year"],d["Total.Female"])
+  plt.xlabel("Year")
+  plt.ylabel("Female Suicides")
+  plt.title("Housewives Committing Suicide in Punjab")
+
+
+  plt.yticks([0,30,60,90,120,150])
+  plt.show()
+
+#+end_src
+
+
+#+NAME: graph3
+#+BEGIN_SRC python :results value
+
+  import matplotlib.pyplot as plt
+  import pandas as pd
+  import numpy as np
+  np_pop=np.array(d.population)
+  #=np.array(d.population)
+
+  d = pd.read_csv("~/teaching2023/data/gapminder.csv")
+  plt.scatter(x = d.gdp_cap, y = d.life_exp, s = np_pop)
+
+  # Previous customizations
+  plt.xscale('log')
+  plt.xlabel('GDP per Capita [in USD]')
+  plt.ylabel('Life Expectancy [in years]')
+  plt.title('World Development in 2007')
+  plt.xticks([1000,10000,100000], ['1k','10k','100k'])
+
+  # Additional customizations
+  plt.text(1550, 71, 'India')
+  plt.text(5700, 80, 'China')
+
+  plt.show()
+
+
+
+
+
+
+
+
+
+  np_pop2 = np_pop*2
+  plt.scatter(gapminder_data.gdp_cap, gapminder_data.life_exp, s = np_pop2)
+  plt.grid(True)
+  plt.xscale('log')
+  plt.xlabel('GDP per Capita [in USD]')
+  plt.ylabel('Life Expectancy [in years]')
+  plt.title('World Development in 2007')
+  plt.xticks([1000, 10000, 100000],['1k', '10k', '100k'])
+  plt.show()
+
+#+END_SRC
